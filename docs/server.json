@@ -1,0 +1,104 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/registry/server.schema.json",
+  "name": "h33-mcp",
+  "namespace": "h33ai",
+  "display_name": "H33",
+  "description": "H33 post-quantum substrate, FHE biometric auth, ZK-STARK proofs, triple-key signing, BotShield, HICS cryptographic scoring, HATS Tier 1 governance, and Bitcoin UTXO quantum insurance — exposed as MCP tools for AI coding agents.",
+  "homepage": "https://mcp.h33.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/H33ai-postquantum/mcp-h33"
+  },
+  "license": "Proprietary",
+  "author": {
+    "name": "H33.ai, Inc.",
+    "email": "support@h33.ai",
+    "url": "https://h33.ai"
+  },
+  "categories": [
+    "security",
+    "cryptography",
+    "post-quantum",
+    "authentication",
+    "compliance"
+  ],
+  "tags": [
+    "post-quantum",
+    "dilithium",
+    "falcon",
+    "sphincs",
+    "fhe",
+    "biometrics",
+    "zk-stark",
+    "substrate",
+    "bitcoin",
+    "utxo",
+    "hics",
+    "hats",
+    "rust"
+  ],
+  "runtime": {
+    "language": "rust",
+    "binary": "h33-mcp",
+    "transports": ["stdio"]
+  },
+  "install": {
+    "cargo": "cargo install h33-mcp",
+    "homebrew": "brew install h33ai/tap/h33-mcp",
+    "script": "curl -sSL https://install.h33.ai/mcp | sh"
+  },
+  "configuration": {
+    "required_env": [
+      {
+        "name": "H33_AGENT_TOKEN",
+        "description": "Short-lived cka_* agent capability token. Mint via `h33 mint`. NEVER pass a ck_live_* server key here — the server will refuse to start.",
+        "secret": true
+      }
+    ],
+    "optional_env": [
+      {
+        "name": "H33_API_BASE",
+        "description": "Override the H33 API endpoint. Defaults to https://api.h33.ai.",
+        "default": "https://api.h33.ai"
+      }
+    ]
+  },
+  "claude_desktop_config": {
+    "mcpServers": {
+      "h33": {
+        "command": "h33-mcp",
+        "env": { "H33_AGENT_TOKEN": "cka_..." }
+      }
+    }
+  },
+  "tools": [
+    { "name": "h33_substrate_enroll",       "description": "Register a new attestation domain on the H33 substrate" },
+    { "name": "h33_substrate_verify",       "description": "Verify a 74-byte substrate commitment against its on-chain anchor" },
+    { "name": "h33_substrate_attest",       "description": "Attest a payload with three-family PQ signatures (Dilithium+FALCON+SPHINCS+)" },
+    { "name": "h33_substrate_list_domains", "description": "List substrate domains for the calling tenant" },
+    { "name": "h33_substrate_anchor_ai_inference", "description": "Anchor an AI inference (model id + prompt hash + output hash) to the substrate" },
+    { "name": "h33_tenant_read",            "description": "Read the calling tenant's profile" },
+    { "name": "h33_tenant_read_usage",      "description": "Read the calling tenant's usage / quota" },
+    { "name": "h33_audit_read",             "description": "Read recent audit log entries for the calling tenant" },
+    { "name": "h33_meta_detection_rules",   "description": "Fetch the latest H33 detection rules (YAML)" },
+    { "name": "h33_meta_get_manifest",      "description": "Fetch the H33 agent manifest" },
+    { "name": "h33_hics_scan",              "description": "Run an HICS scan on a codebase and return a numeric improvement score" },
+    { "name": "h33_hics_badge",             "description": "Generate the substrate-anchored HICS badge for a PR or release" },
+    { "name": "h33_biometric_enroll",       "description": "Enroll a biometric template under fully-homomorphic encryption" },
+    { "name": "h33_biometric_verify",       "description": "Verify a probe biometric against an FHE-encrypted template" },
+    { "name": "h33_zk_prove",               "description": "Generate a ZK-STARK proof for a statement" },
+    { "name": "h33_zk_verify",              "description": "Verify a ZK-STARK proof" },
+    { "name": "h33_triple_key_sign",        "description": "Sign a document with Dilithium + FALCON + SPHINCS+" },
+    { "name": "h33_triple_key_verify",      "description": "Verify a triple-key signature" },
+    { "name": "h33_botshield_challenge",    "description": "Issue a BotShield post-quantum challenge" },
+    { "name": "h33_botshield_verify",       "description": "Verify a BotShield response" },
+    { "name": "h33_bitcoin_attest",         "description": "Attest a Bitcoin UTXO with three-family PQ sigs and anchor a 74-byte commitment for OP_RETURN" },
+    { "name": "h33_bitcoin_verify",         "description": "Verify a previously-issued Bitcoin UTXO attestation (public endpoint, no auth)" },
+    { "name": "h33_bitcoin_lookup",         "description": "Look up any H33 attestations for a given UTXO (public endpoint, no auth)" }
+  ],
+  "verification": {
+    "substrate_anchored": true,
+    "patent_pending_claims": 129,
+    "license_required_for_production": true
+  }
+}
